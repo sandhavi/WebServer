@@ -1,5 +1,46 @@
-/.vscode
-/a.exe
-/HTTPRequest.c
-/HTTPRequest.h
-/public
+# Compiled object files
+*.o
+*.out
+*.a
+*.so
+*.exe
+
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# HTML/CSS/JS
+node_modules/
+dist/
+.bundle
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and Editors
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+out/
+
+# Eclipse
+.metadata/
+*.classpath
+*.project
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Other
+.DS_Store
+Thumbs.db
