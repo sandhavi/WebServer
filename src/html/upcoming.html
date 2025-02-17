@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlickX - Upcoming Movies</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/upcoming.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">FlickX</div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/upcoming" class="active">Upcoming Movies</a>
+        <a href="/past">Past Movies</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Upcoming Movies</h1>
+      <p>
+        Get a sneak peek at the most anticipated films hitting theaters soon.
+        From blockbuster franchises to indie gems, discover what's next in
+        cinema.
+      </p>
+    </header>
+
+    <!-- Movie Grid Section -->
+    <section class="movie-grid">
+      <div class="grid-controls">
+        <div class="sorting">
+          <label for="sort-by">Sort by:</label>
+          <select id="sort-by" onchange="sortMovies()">
+            <option value="date">Release Date</option>
+            <option value="name">Name</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            placeholder="Search movies..."
+            oninput="searchMovies()"
+          />
+        </div>
+      </div>
+
+      <div class="grid-container" id="movie-container">
+        <!-- Movie Card 1 -->
+        <div
+          class="movie-card"
+          data-release="2025-05-15"
+          data-title="Dune: Part Three"
+          data-rating="9.2"
+        >
+          <img
+            src="/dune3.jpg"
+            alt="Dune: Part Three"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Dune: Part Three</h3>
+            <span class="release-date">May 15, 2025</span>
+            <p>
+              The final chapter in Denis Villeneuve's epic adaptation of Frank
+              Herbert's science fiction masterpiece.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>9.2</span>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 2 -->
+        <div
+          class="movie-card"
+          data-release="2025-03-28"
+          data-title="Avatar 3"
+          data-rating="8.9"
+        >
+          <img
+            src="/avatar.jpg"
+            alt="Avatar 3"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Avatar 3</h3>
+            <span class="release-date">March 28, 2025</span>
+            <p>
+              Return to Pandora in James Cameron's third installment of the
+              groundbreaking Avatar series.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.9</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 3 -->
+        <div
+          class="movie-card"
+          data-release="2025-02-14"
+          data-title="Mission: Impossible 8"
+          data-rating="8.7"
+        >
+          <img
+            src="/mission.jpg"
+            alt="Mission: Impossible 8"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Mission: Impossible 8</h3>
+            <span class="release-date">February 14, 2025</span>
+            <p>
+              Tom Cruise returns as Ethan Hunt in the explosive conclusion to
+              the two-part Mission: Impossible saga.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.7</span>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 4 -->
+        <div
+          class="movie-card"
+          data-release="2025-07-04"
+          data-title="The Batman 2"
+          data-rating="9.0"
+        >
+          <img
+            src="/batman.webp"
+            alt="The Batman 2"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>The Batman 2</h3>
+            <span class="release-date">July 4, 2025</span>
+            <p>
+              Robert Pattinson returns as the Dark Knight in Matt Reeves' gritty
+              sequel exploring the corruption of Gotham City.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>9.0</span>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 5 -->
+        <div
+          class="movie-card"
+          data-release="2025-06-20"
+          data-title="Fantastic Beasts 4"
+          data-rating="7.8"
+        >
+          <img
+            src="/fantastic.jpg"
+            alt="Fantastic Beasts 4"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Fantastic Beasts 4</h3>
+            <span class="release-date">June 20, 2025</span>
+            <p>
+              The magical world expands in the fourth installment of the
+              Fantastic Beasts series, featuring new creatures and dark forces.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>7.8</span>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 6 -->
+        <div
+          class="movie-card"
+          data-release="2025-04-11"
+          data-title="Fast & Furious 11"
+          data-rating="7.5"
+        >
+          <img
+            src="/ff11.jpg"
+            alt="Fast & Furious 11"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Fast & Furious 11</h3>
+            <span class="release-date">April 11, 2025</span>
+            <p>
+              The beloved action franchise continues with more high-octane
+              stunts, exotic locations, and family bonds.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>7.5</span>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 7 -->
+        <div
+          class="movie-card"
+          data-release="2025-05-02"
+          data-title="Black Panther 3"
+          data-rating="8.5"
+        >
+          <img
+            src="/black_panther.jpg"
+            alt="Black Panther 3"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Black Panther 3</h3>
+            <span class="release-date">May 2, 2025</span>
+            <p>
+              The saga of Wakanda continues with new challenges and adventures
+              in the third installment of the acclaimed Marvel franchise.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.5</span>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 8 -->
+        <div
+          class="movie-card"
+          data-release="2025-08-08"
+          data-title="Jurassic World: New Era"
+          data-rating="8.2"
+        >
+          <img
+            src="/jurasic_park.jpg"
+            alt="Jurassic World: New Era"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Jurassic World: New Era</h3>
+            <span class="release-date">August 8, 2025</span>
+            <p>
+              Dinosaurs roam the Earth once again in this fresh take on the
+              Jurassic franchise, blending nostalgia with new terrors.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.2</span>
+              </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <footer class="footer">
+     
+      <div class="copyright">&copy; 22021094 - DSL Wanigasooriya. All rights reserved. </div>
+    </footer>
+  </body>
+</html>
+
+    <script src="/upcoming.js">
+     
+    </script>
+  </body>
+</html>
