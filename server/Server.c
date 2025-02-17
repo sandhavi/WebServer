@@ -37,75 +37,125 @@ const char *get_mime_type(const char *filename)
         return "image/png";
     if (strcmp(dot, ".gif") == 0)
         return "image/gif";
+    if (strcmp(dot, ".ico") == 0)
+        return "image/x-icon";
+    if (strcmp(dot, ".webp") == 0)
+        return "image/webp";
+    if (strcmp(dot, ".mp4") == 0)
+        return "video/mp4";
     return "application/octet-stream";
 }
 
-void send_file(SOCKET client_socket, const char *filename)
+void send_file(SOCKET client_socket, const char *path)
 {
-    // Handle root path request
-    const char *actual_filename = filename;
-    if (strlen(filename) == 0)
+    // Remove leading slash if present
+    const char *clean_path = path;
+    if (path[0] == '/')
     {
-        actual_filename = "index.html";
+        clean_path = path + 1;
+    }
+
+    // Handle root path request
+    if (strlen(clean_path) == 0)
+    {
+        clean_path = "index.html";
     }
 
     // Silently ignore favicon requests
-    if (strcmp(actual_filename, "favicon.ico") == 0)
+    if (strcmp(clean_path, "favicon.ico") == 0)
     {
         const char *empty_response = "HTTP/1.1 204 No Content\r\n\r\n";
         send(client_socket, empty_response, strlen(empty_response), 0);
         return;
     }
 
-    // Basic filename validation (whitelist)
-    if (strcmp(actual_filename, "index.html") != 0 &&
-        strcmp(actual_filename, "contact.html") != 0 && // Add contact.html to whitelist
-        strcmp(actual_filename, "style.css") != 0 &&
-        strcmp(actual_filename, "script.js") != 0)
+    char filepath[512];
+    const char *dot = strrchr(clean_path, '.');
+
+    if (!dot)
     {
-        printf("[ERROR]: Invalid filename requested: %s\n", actual_filename);
+        // No extension - assume it's a route and look for HTML file
+        snprintf(filepath, sizeof(filepath), "../src//html/%s.html", clean_path);
+    }
+    else
+    {
+        // Has extension - determine the appropriate folder
+        if (strcmp(dot, ".html") == 0)
+        {
+            // HTML files go to html folder
+            snprintf(filepath, sizeof(filepath), "../src/html/%s", clean_path);
+        }
+        else if (strcmp(dot, ".css") == 0)
+        {
+            // All other assets go to public folder
+            snprintf(filepath, sizeof(filepath), "../src/css/%s", clean_path);
+        }
+        else if (strcmp(dot, ".js") == 0)
+        {
+            snprintf(filepath, sizeof(filepath), "../src/js/%s", clean_path);
+        }
+        else
+        {
+            snprintf(filepath, sizeof(filepath), "../public/%s", clean_path);
+        }
+    }
+
+    // Define allowed file extensions
+    const char *allowed_extensions[] = {
+        ".html", ".css", ".js",
+        ".jpg", ".jpeg", ".png", ".gif", ".ico", ".webp",
+        ".mp4", ".mp3", ".wav",
+        NULL};
+
+    // Validate file extension
+    int is_allowed = 0;
+    const char *file_ext = dot ? dot : ".html"; // Use .html for routes without extension
+
+    for (int i = 0; allowed_extensions[i] != NULL; i++)
+    {
+        if (strcmp(file_ext, allowed_extensions[i]) == 0)
+        {
+            is_allowed = 1;
+            break;
+        }
+    }
+
+    if (!is_allowed)
+    {
+        printf("[ERROR]: Invalid file type requested: %s\n", clean_path);
         const char *bad_request_response = "HTTP/1.1 400 Bad Request\r\n"
                                            "Content-Type: text/html\r\n"
                                            "Content-Length: 37\r\n"
-                                           "Connection: close\r\n"
                                            "\r\n"
                                            "<html><body><h1>400 Bad Request</h1></body></html>";
         send(client_socket, bad_request_response, strlen(bad_request_response), 0);
         return;
     }
 
-    char filepath[256];
-    snprintf(filepath, sizeof(filepath), "D:/UCSC/Y2S2/Computer_Network/WebServer/html/%s", actual_filename);
-
-    printf("Looking for file at absolute path: %s\n", filepath);
+    printf("Looking for file at path: %s\n", filepath);
 
     FILE *file = fopen(filepath, "rb");
     if (file == NULL)
     {
-        perror("File open error");
         printf("[ERROR 404]: File not found -> %s\n", filepath);
-
         const char *not_found_response = "HTTP/1.1 404 Not Found\r\n"
                                          "Content-Type: text/html\r\n"
                                          "Content-Length: 46\r\n"
-                                         "Connection: close\r\n"
                                          "\r\n"
                                          "<html><body><h1>404 Not Found</h1></body></html>";
         send(client_socket, not_found_response, strlen(not_found_response), 0);
         return;
     }
 
-    printf("File opened successfully!\n");
-
-    // Get the file size
+    // Get file size
     fseek(file, 0, SEEK_END);
     long file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    // Determine MIME type
-    const char *mime_type = get_mime_type(filename);
+    // Get MIME type
+    const char *mime_type = get_mime_type(filepath);
 
-    // Construct the HTTP response header
+    // Send HTTP headers
     char response_header[512];
     snprintf(response_header, sizeof(response_header),
              "HTTP/1.1 200 OK\r\n"
@@ -117,91 +167,55 @@ void send_file(SOCKET client_socket, const char *filename)
 
     send(client_socket, response_header, strlen(response_header), 0);
 
-    // Read and send file content
-    char buffer[1024];
-    size_t bytesRead;
-    while ((bytesRead = fread(buffer, 1, sizeof(buffer), file)) > 0)
+    // Send file content
+    char buffer[4096];
+    size_t bytes_read;
+    while ((bytes_read = fread(buffer, 1, sizeof(buffer), file)) > 0)
     {
-        int bytesSent = send(client_socket, buffer, bytesRead, 0);
-        if (bytesSent == SOCKET_ERROR)
+        if (send(client_socket, buffer, bytes_read, 0) == SOCKET_ERROR)
         {
             perror("Send failed");
-            fclose(file);
-            closesocket(client_socket);
-            return;
+            break;
         }
     }
 
     fclose(file);
-    printf("File sent successfully!\n");
+    printf("File sent successfully: %s\n", filepath);
 }
 
 void handle_connection(SOCKET client_socket)
 {
     char buffer[2048];
     int bytes_received = recv(client_socket, buffer, sizeof(buffer) - 1, 0);
-    if (bytes_received == SOCKET_ERROR)
+
+    if (bytes_received <= 0)
     {
-        perror("Receive failed");
-        closesocket(client_socket);
-        return;
-    }
-    if (bytes_received == 0)
-    {
-        printf("Client disconnected.\n");
         closesocket(client_socket);
         return;
     }
 
     buffer[bytes_received] = '\0';
-    printf("Received request:\n%s\n", buffer);
 
     // Parse the request
-    char *line = strtok(buffer, "\r\n");
-    if (line == NULL)
-    {
-        printf("Invalid request.\n");
-        closesocket(client_socket);
-        return;
-    }
-
     char method[16], path[256], protocol[16];
-    if (sscanf(line, "%s %s %s", method, path, protocol) != 3)
+    if (sscanf(buffer, "%s %s %s", method, path, protocol) != 3)
     {
-        printf("Invalid request line.\n");
         closesocket(client_socket);
         return;
     }
 
-    printf("Method: %s, Path: %s, Protocol: %s\n", method, path, protocol);
+    printf("Received request: %s %s %s\n", method, path, protocol);
 
-    // Basic request validation
     if (strcmp(method, "GET") != 0)
     {
-        printf("Only GET requests are supported.\n");
+        const char *method_not_allowed = "HTTP/1.1 405 Method Not Allowed\r\n\r\n";
+        send(client_socket, method_not_allowed, strlen(method_not_allowed), 0);
         closesocket(client_socket);
         return;
     }
 
-    // Handle root path
-    char *filename;
-    if (strcmp(path, "/") == 0)
-    {
-        filename = "index.html"; // Default file for root path
-    }
-    else if (strcmp(path, "/contact") == 0)
-    {
-        filename = "contact.html"; // Handle /contact path
-    }
-    else
-    {
-        // Remove leading slash from the path
-        filename = path + 1;
-    }
-
-    // Send the file
-    send_file(client_socket, filename);
-
+    // Handle the request
+    send_file(client_socket, path);
     closesocket(client_socket);
 }
 struct Server *server_constructor(
