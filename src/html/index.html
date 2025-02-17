@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlickX - Your Ultimate Movie Destination</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">FlickX</div>
+      <div class="nav-links">
+        <a href="/" class="active">Home</a>
+        <a href="upcoming">Upcoming Movies</a>
+        <a href="past">Past Movies</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <img src="/hero.jpg" alt="City at night" class="hero-image" />
+      <div class="hero-overlay">
+        <div class="welcome-message">
+          <h1>Explore the Best Movies</h1>
+          <p>
+            Dive into a world of thrilling adventures, captivating stories, and
+            unforgettable characters. FlickX is your destination for the
+            latest blockbusters and timeless classics.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Movie Section -->
+    <section class="featured-movie">
+      <img
+        src="/inception.jpg"
+        alt="Inception Movie Poster"
+        class="featured-movie-image"
+      />
+      <div class="featured-movie-content">
+        <h2>Inception</h2>
+        <p>
+          Inception is a 2010 science fiction action film directed by
+          Christopher Nolan, who also wrote the screenplay. The film stars
+          Leonardo DiCaprio as a professional thief who steals information by
+          infiltrating the subconscious of his targets.
+        </p>
+        <button class="watch-trailer-btn" onclick="openTrailer()">
+          <i class="fas fa-play-circle">
+            <a href="https://youtu.be/Qwe6qXFTdgc?si=GuQoBd9nk2GO2OOh"></a>
+          </i> Watch Trailer
+        </button>
+      </div>
+    </section>
+
+    <!-- Featured Video Section -->
+    <section class="featured-video">
+      <h2>Behind the Scenes</h2>
+      <div class="video-container">
+        <video controls>
+          <source src="/Inception.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <!-- Trailer Modal -->
+    <div class="trailer-modal" id="trailerModal">
+      <div class="trailer-container">
+        <span class="close-trailer" onclick="closeTrailer()">&times;</span>
+        <iframe
+          class="trailer-iframe"
+          src="about:blank"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Audio Control -->
+    <div id="audioControl" onclick="toggleAudio()">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        stroke-width="2"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path
+          d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+        ></path>
+      </svg>
+    </div>
+
+    <audio id="backgroundAudio">
+      <source src="/avengers.mp3" type="audio/mp3" />
+    </audio>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="copyright">&copy; 22021094 - DSL Wanigasooriya. All rights reserved. </div>
+    </footer>
+    </body>
+</html>
+
+<script src="/index.js"></script>
+  </body>
+</html>
