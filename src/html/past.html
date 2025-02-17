@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlickX - Past Movies</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<link rel="stylesheet" href="/past.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">FlickX</div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/upcoming">Upcoming Movies</a>
+        <a href="/past" class="active">Past Movies</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Past Movies</h1>
+      <p>
+        Relive the magic of cinema's recent hits. Explore our collection of past
+        movies and rediscover your favorites.
+      </p>
+    </header>
+
+    <!-- Movie Grid Section -->
+    <section class="movie-grid">
+      <div class="grid-controls">
+        <div class="sorting">
+          <label for="sort-by">Sort by:</label>
+          <select id="sort-by" onchange="sortMovies()">
+            <option value="date">Release Date</option>
+            <option value="name">Name</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            placeholder="Search movies..."
+            oninput="searchMovies()"
+          />
+        </div>
+      </div>
+
+      <div class="grid-container" id="movie-container">
+        <!-- Movie Card 1 -->
+        <div
+          class="movie-card"
+          data-release="2024-12-20"
+          data-title="Aquaman and the Lost Kingdom"
+          data-rating="6.1"
+        >
+          <img
+            src="/aqua.jpg"
+            alt="Aquaman and the Lost Kingdom"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Aquaman and the Lost Kingdom</h3>
+            <span class="release-date">December 20, 2024</span>
+            <p>
+              Aquaman must team up with his brother Orm to protect Atlantis from
+              an ancient power.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>6.1</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 2 -->
+        <div
+          class="movie-card"
+          data-release="2024-03-10"
+          data-title="Dune: Part Two"
+          data-rating="9.0"
+        >
+          <img src="/dune.jpg" alt="Dune: Part Two" class="card-image" />
+          <div class="card-content">
+            <h3>Dune: Part Two</h3>
+            <span class="release-date">March 10, 2024</span>
+            <p>
+              Paul Atreides unites with Chani and the Fremen while seeking
+              revenge against the conspirators who destroyed his family.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>9.0</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 3 -->
+        <div
+          class="movie-card"
+          data-release="2023-07-21"
+          data-title="Oppenheimer"
+          data-rating="8.6"
+        >
+          <img src="/oppenheimer.jpg" alt="Oppenheimer" class="card-image" />
+          <div class="card-content">
+            <h3>Oppenheimer</h3>
+            <span class="release-date">July 21, 2023</span>
+            <p>
+              The story of American scientist J. Robert Oppenheimer and his role
+              in the development of the atomic bomb.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.6</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 4 -->
+        <div
+          class="movie-card"
+          data-release="2023-06-02"
+          data-title="Spider-Man: Across the Spider-Verse"
+          data-rating="8.6"
+        >
+          <img
+            src="/spiderman.jpg"
+            alt="Spider-Man: Across the Spider-Verse"
+            class="card-image"
+          />
+          <div class="card-content">
+            <h3>Spider-Man: Across the Spider-Verse</h3>
+            <span class="release-date">June 2, 2023</span>
+            <p>
+              Miles Morales catapults across the Multiverse, where he encounters
+              a team of Spider-People charged with protecting its very
+              existence.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.6</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 5 -->
+        <div
+          class="movie-card"
+          data-release="2023-03-03"
+          data-title="Creed III"
+          data-rating="6.9"
+        >
+          <img src="/creed.jpg" alt="Creed III" class="card-image" />
+          <div class="card-content">
+            <h3>Creed III</h3>
+            <span class="release-date">March 3, 2023</span>
+            <p>
+              Adonis Creed confronts a former friend and boxing prodigy, Damian
+              Anderson, after he resurfaces following a long prison sentence.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>6.9</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Movie Card 6 -->
+
+        <div
+          class="movie-card"
+          data-release="2023-10-03"
+          data-title="It Ends with Us"
+          data-rating="4.5"
+        >
+          <img src="/ends.jpg" alt="It Ends with Us" class="card-image" />
+          <div class="card-content">
+            <h3>It Ends with Us</h3>
+            <span class="release-date">October 3, 2024</span>
+            <p>
+              Lily Bloom moves to Boston to chase her lifelong dream of opening
+              her own business.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>4.5</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="movie-card"
+          data-release="2024-08-31"
+          data-title="DamselI"
+          data-rating="8.1"
+        >
+          <img src="/damsal.jpg" alt="Damsel" class="card-image" />
+          <div class="card-content">
+            <h3>Damsel</h3>
+            <span class="release-date">August 31, 2024</span>
+            <p>
+              A young woman agrees to marry a handsome prince only to
+              discover it was all a trap.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>8.1</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div
+          class="movie-card"
+          data-release="2024-10-25"
+          data-title=Red One"
+          data-rating="7.5"
+        >
+          <img src="/redone.jpg" alt="Red One" class="card-image" />
+          <div class="card-content">
+            <h3>Red One</h3>
+            <span class="release-date">December 25, 2024</span>
+            <p>
+              When a villain kidnaps Santa Claus from the North Pole, an E.L.F. operative joins forces with the world's most accomplished tracker to find him and save Christmas.
+            </p>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <i class="fas fa-star"></i>
+                <span>7.5</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="copyright">&copy; 22021094 - DSL Wanigasooriya. All rights reserved. </div>
+    </footer>
+
+   
+  </body>
+<script src="/past.js"></script>
+</html>
