@@ -24,9 +24,9 @@ const char *get_mime_type(const char *filename)
     if (!dot || dot == filename)
         return "text/plain";
 
-    // Make sure to return "text/html" with proper headers
+    // return "text/html" wit proper headers
     if (strcmp(dot, ".html") == 0 || strcmp(dot, ".htm") == 0)
-        return "text/html; charset=UTF-8"; // Added charset
+        return "text/html; charset=UTF-8"; 
     if (strcmp(dot, ".css") == 0)
         return "text/css";
     if (strcmp(dot, ".js") == 0)
@@ -61,7 +61,7 @@ void send_file(SOCKET client_socket, const char *path)
         clean_path = "index.html";
     }
 
-    // Silently ignore favicon requests
+    // ignore favicon requests
     if (strcmp(clean_path, "favicon.ico") == 0)
     {
         const char *empty_response = "HTTP/1.1 204 No Content\r\n\r\n";
@@ -74,20 +74,17 @@ void send_file(SOCKET client_socket, const char *path)
 
     if (!dot)
     {
-        // No extension - assume it's a route and look for HTML file
+
         snprintf(filepath, sizeof(filepath), "../src//html/%s.html", clean_path);
     }
     else
     {
-        // Has extension - determine the appropriate folder
         if (strcmp(dot, ".html") == 0)
         {
-            // HTML files go to html folder
             snprintf(filepath, sizeof(filepath), "../src/html/%s", clean_path);
         }
         else if (strcmp(dot, ".css") == 0)
         {
-            // All other assets go to public folder
             snprintf(filepath, sizeof(filepath), "../src/css/%s", clean_path);
         }
         else if (strcmp(dot, ".js") == 0)
@@ -100,7 +97,7 @@ void send_file(SOCKET client_socket, const char *path)
         }
     }
 
-    // Define allowed file extensions
+    // Allowed file extensions
     const char *allowed_extensions[] = {
         ".html", ".css", ".js",
         ".jpg", ".jpeg", ".png", ".gif", ".ico", ".webp",
@@ -109,7 +106,7 @@ void send_file(SOCKET client_socket, const char *path)
 
     // Validate file extension
     int is_allowed = 0;
-    const char *file_ext = dot ? dot : ".html"; // Use .html for routes without extension
+    const char *file_ext = dot ? dot : ".html"; 
 
     for (int i = 0; allowed_extensions[i] != NULL; i++)
     {
@@ -147,15 +144,12 @@ void send_file(SOCKET client_socket, const char *path)
         return;
     }
 
-    // Get file size
     fseek(file, 0, SEEK_END);
     long file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    // Get MIME type
     const char *mime_type = get_mime_type(filepath);
 
-    // Send HTTP headers
     char response_header[512];
     snprintf(response_header, sizeof(response_header),
              "HTTP/1.1 200 OK\r\n"
@@ -214,7 +208,7 @@ void handle_connection(SOCKET client_socket)
         return;
     }
 
-    // Handle the request
+    // Handle request
     send_file(client_socket, path);
     closesocket(client_socket);
 }
@@ -228,7 +222,7 @@ struct Server *server_constructor(
     void (*launch)(struct Server *server))
 {
 
-    // Initialize Winsock
+    // Winsock
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
