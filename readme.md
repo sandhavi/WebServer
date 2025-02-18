@@ -7,7 +7,7 @@ A simple web server implemented in C.
 Navigate to the `server` directory and compile using:
 
 ```sh
-gcc test.c Server.c -o a -lws2_32
+gcc main.c Server.c -o a -lws2_32
 ```
 
 ## Running the Server
