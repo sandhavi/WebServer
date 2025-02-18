@@ -42,11 +42,3 @@ function searchMovies() {
         }
     });
 }
-
-// Newsletter subscription
-function submitNewsletter(event) {
-    event.preventDefault();
-    const email = event.target.querySelector("input").value;
-    alert(`Thank you! You've subscribed with ${email}`);
-    event.target.reset();
-}

@@ -15,9 +15,9 @@ function toggleAudio() {
 function openTrailer() {
     const modal = document.getElementById("trailerModal");
     const iframe = modal.querySelector(".trailer-iframe");
-    iframe.src = "https://www.youtube.com/embed/YoHD9XEInc0"; // Inception trailer
+    iframe.src = "https://www.youtube.com/embed/YoHD9XEInc0";
     modal.classList.add("active");
-    document.body.style.overflow = "hidden"; // Disable scroll
+    document.body.style.overflow = "hidden"; 
 }
 
 function closeTrailer() {
@@ -25,7 +25,7 @@ function closeTrailer() {
     const iframe = modal.querySelector(".trailer-iframe");
     iframe.src = "about:blank";
     modal.classList.remove("active");
-    document.body.style.overflow = "auto"; // Enable scroll
+    document.body.style.overflow = "auto";
 }
 
 // Close modal when clicking outside
